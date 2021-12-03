@@ -1,17 +1,10 @@
 import { Router } from 'express';
 
+import * as ApiController from '../controllers/api.controller';
+
 const router = Router();
 
-router.get('/', (req, res) => {
-    res.json({
-        hello: 'world'
-    });
-});
-
-router.get('/test', (req, res) => {
-    res.json({
-        test: 'ok'
-    });
-});
+router.get('/', ApiController.home);
+router.get('/test', ApiController.test);
 
 export default router;
