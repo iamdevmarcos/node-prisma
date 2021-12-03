@@ -7,15 +7,35 @@ type findOneDataProp = {
     email?: string;
 }
 
+type createDataProp = {
+    email: string;
+    name: string;
+    age?: number;
+}
+
 export const UserService = {
 
     findAll: async () => {
-        return await prisma.user.findMany();
+        return await prisma.user.findMany({
+            orderBy: {
+                id: 'desc'
+            }
+        });
     },
 
     findOne: async (data: findOneDataProp) => {
         return await prisma.user.findUnique({
             where: data
+        });
+    },
+
+    create: async (data: createDataProp) => {
+        return await prisma.user.create({
+            data: {
+                email: data.email,
+                name: data.name,
+                age: data.age ?? 0
+            }
         });
     }
 

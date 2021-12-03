@@ -41,5 +41,33 @@ export const create = async (req: Request, res: Response) => {
         res.json({ error: 'Data is empty...' });
     }
 }
-export const togglePost = async (req: Request, res: Response) => {}
-export const deletePost = async (req: Request, res: Response) => {}
+export const togglePost = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    
+    const post = await PostService.findOne(parseInt(id));
+    if(post) {
+
+        const postUpdated = await PostService.update(
+            post.id,
+            { published: !post.published }
+        );
+
+        res.json({ post: postUpdated });
+
+    } else {
+        res.json({ error: 'Post not found...' });
+    }
+}
+
+export const deletePost = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    
+    const post = await PostService.findOne(parseInt(id));
+    
+    if(post) {
+        await PostService.remove(parseInt(id));
+        res.json({ status: 'true' });
+    } else {
+        res.json({ error: 'post not found...' });
+    }
+}

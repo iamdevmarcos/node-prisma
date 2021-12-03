@@ -8,6 +8,13 @@ type createDataProp = {
     authorId: number;
 }
 
+type updateDataProp = {
+    title?: string;
+    body?: string;
+    authorId?: number;
+    published?: boolean;
+}
+
 export const PostService = {
 
     findAll: async () => {
@@ -29,6 +36,18 @@ export const PostService = {
 
     create: async (data: createDataProp) => {
         return await prisma.post.create({ data });
+    },
+
+    update: async (id: number, data: updateDataProp) => {
+        return await prisma.post.update({
+            where: { id }, data
+        });
+    },
+
+    remove: async (id: number) => {
+        return await prisma.post.delete({
+            where: { id }
+        });
     }
 
 }
