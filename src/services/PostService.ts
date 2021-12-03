@@ -2,6 +2,12 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+type createDataProp = {
+    title: string;
+    body: string;
+    authorId: number;
+}
+
 export const PostService = {
 
     findAll: async () => {
@@ -13,6 +19,16 @@ export const PostService = {
                 id: 'desc'
             }
         });
+    },
+
+    findOne: async (id: number) => {
+        return await prisma.post.findUnique({
+            where: { id }
+        });
+    },
+
+    create: async (data: createDataProp) => {
+        return await prisma.post.create({ data });
     }
 
 }
