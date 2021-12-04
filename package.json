@@ -1,7 +1,7 @@
 {
   "name": "node-prisma",
   "version": "1.0.0",
-  "description": "a simple CRUD with Node.JS + Prisma",
+  "description": "blog api created with Node.JS and Prisma <3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
