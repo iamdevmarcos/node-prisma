@@ -9,14 +9,13 @@ export const all = async (req: Request, res: Response) => {
 
 export const create = async (req: Request, res: Response) => {
     const { email, name, age } = req.body;
-
+    
     if(email && name) {
-        // TODO: Validar e-email
         const user = await UserService.findOne({ email });
 
         if(!user) {
             const newUser = await UserService.create({
-                email, name, age: parseInt(age)
+                email, name, age: age ?? 18
             });
 
             res.status(201).json({ user: newUser });
@@ -27,5 +26,28 @@ export const create = async (req: Request, res: Response) => {
         res.status(201).json({ user });
     } else {
         res.json({ error: 'Data is empty...' });
+    }
+}
+
+export const one = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const user = await UserService.findById(parseInt(id));
+    if(user) {
+        res.json({ user });
+    } else {
+        res.json({ error: 'user not found' });
+    }
+}
+
+export const remove = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const user = await UserService.findById(parseInt(id));
+    if(user) {
+        await UserService.remove(parseInt(id));
+        res.json({});
+    } else {
+        res.json({ error: "user not found..." });
     }
 }

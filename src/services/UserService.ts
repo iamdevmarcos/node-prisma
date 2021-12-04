@@ -29,13 +29,25 @@ export const UserService = {
         });
     },
 
+    findById: async (id: number) => {
+        return await prisma.user.findUnique({
+            where: { id }
+        });
+    },
+
     create: async (data: createDataProp) => {
         return await prisma.user.create({
             data: {
                 email: data.email,
                 name: data.name,
-                age: data.age ?? 0
+                age: data.age
             }
+        });
+    },
+
+    remove: async (id: number) => {
+        return await prisma.user.delete({
+            where: { id }
         });
     }
 
